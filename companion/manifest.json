@@ -1,0 +1,32 @@
+{
+	"id": "hotkeys",
+	"name": "hotkeys",
+	"shortname": "hotkeys",
+	"description": "Monitor keyboard key presses on the local machine",
+	"version": "0.0.1",
+	"license": "MIT",
+	"repository": "https://github.com/bitfocus/companion-module-hotkeys",
+	"bugs": "https://github.com/bitfocus/companion-module-hotkeys/issues",
+	"maintainers": [
+		{
+			"name": "Marcin Wardecki",
+			"email": "m.wardecki89@gmail.com"
+		}
+	],
+	"legacyIds": ["hotkeys", "keys","keyboard"],
+	"runtime": {
+		"type": "node18",
+		"api": "nodejs-ipc",
+		"apiVersion": "0.0.0",
+		"entrypoint": "../index.js"
+	},
+	"manufacturer": "Marcin Wardecki",
+	"products": [
+		"HotKeys"
+	],
+	"keywords": [
+		"keyboard",
+		"hotkeys",
+		"Key press"
+	]
+}
