@@ -13,7 +13,7 @@ class HotkeysInstance extends InstanceBase {
 	async init(config) {
 		this.config = config
 		this.updateStatus(InstanceStatus.Ok)
-		
+
 		// Initialize monitored keys array based on config
 		this.monitoredKeys = []
 
@@ -95,17 +95,17 @@ class HotkeysInstance extends InstanceBase {
 		this.config = config
 
 		// Check if key configuration has changed
-		const keysChanged = 
-			prevConfig.key1_id !== config.key1_id || 
-			prevConfig.key2_id !== config.key2_id || 
-			prevConfig.key3_id !== config.key3_id || 
-			prevConfig.key4_id !== config.key4_id || 
-			prevConfig.key5_id !== config.key5_id || 
-			prevConfig.key6_id !== config.key6_id || 
-			prevConfig.key2_enabled !== config.key2_enabled || 
-			prevConfig.key3_enabled !== config.key3_enabled || 
-			prevConfig.key4_enabled !== config.key4_enabled || 
-			prevConfig.key5_enabled !== config.key5_enabled || 
+		const keysChanged =
+			prevConfig.key1_id !== config.key1_id ||
+			prevConfig.key2_id !== config.key2_id ||
+			prevConfig.key3_id !== config.key3_id ||
+			prevConfig.key4_id !== config.key4_id ||
+			prevConfig.key5_id !== config.key5_id ||
+			prevConfig.key6_id !== config.key6_id ||
+			prevConfig.key2_enabled !== config.key2_enabled ||
+			prevConfig.key3_enabled !== config.key3_enabled ||
+			prevConfig.key4_enabled !== config.key4_enabled ||
+			prevConfig.key5_enabled !== config.key5_enabled ||
 			prevConfig.key6_enabled !== config.key6_enabled
 
 		if (keysChanged) {
@@ -210,7 +210,7 @@ class HotkeysInstance extends InstanceBase {
 	// Update variable definitions based on configured keys
 	updateVariableDefinitions() {
 		this.log('debug', 'Updating variable definitions')
-		
+
 		// Map key configs to variable definitions
 		const variables = this.monitoredKeys.map((keyConfig) => {
 			this.log('debug', `Creating variable for key: ID=${keyConfig.id}, Value=${keyConfig.value}`)
@@ -221,16 +221,16 @@ class HotkeysInstance extends InstanceBase {
 		})
 
 		this.log('info', `Setting ${variables.length} variable definitions`)
-		
+
 		// Set the variable definitions in Companion
 		this.setVariableDefinitions(variables)
-		
+
 		// Initialize variable values to 0
 		const variableValues = this.monitoredKeys.reduce((obj, keyConfig) => {
 			obj[keyConfig.id] = 0
 			return obj
 		}, {})
-		
+
 		this.log('debug', `Initializing variable values: ${JSON.stringify(variableValues)}`)
 		this.setVariableValues(variableValues)
 	}
@@ -339,7 +339,8 @@ class HotkeysInstance extends InstanceBase {
 				type: 'static-text',
 				id: 'info',
 				label: 'Info',
-				value: 'This module allows you to monitor up to 6 keyboard keys and use them as variables in your Companion instance.',
+				value:
+					'This module allows you to monitor up to 6 keyboard keys and use them as variables in your Companion instance.',
 				width: 12,
 			},
 			// Key 1 - Always enabled by default

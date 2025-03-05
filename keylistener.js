@@ -15,7 +15,7 @@ class KeyListener {
 
 			// Log detected keys for configuration debugging
 			this.instance.log('info', 'Monitored keys config:')
-			this.instance.monitoredKeys.forEach(key => {
+			this.instance.monitoredKeys.forEach((key) => {
 				this.instance.log('info', `Key ID: ${key.id}, Value: ${key.value}, Label: ${key.label || 'N/A'}`)
 			})
 
@@ -23,35 +23,38 @@ class KeyListener {
 			this.keyboard.addListener((e, isDown) => {
 				// Get the original key name from the event
 				const originalKeyName = e.name
-				
+
 				// Normalize the key name for consistent matching
 				const keyName = this.normalizeKeyName(originalKeyName)
-				
+
 				const state = e.state === 'DOWN' ? 'down' : 'up'
 				this.instance.log('debug', `Key event received: ${originalKeyName} (normalized: ${keyName}), state: ${state}`)
 
 				// Find the key configuration
 				const keyConfig = this.findKeyConfig(keyName)
-				
+
 				if (keyConfig) {
 					const keyId = keyConfig.id
-					const currentState = (state === 'down') ? 1 : 0
+					const currentState = state === 'down' ? 1 : 0
 
 					this.instance.log('debug', `Found matching key config: ${JSON.stringify(keyConfig)}`)
-					
+
 					// Update the variable and keep track of our state
 					this.pressedKeys[keyId] = currentState === 1
 					this.instance.handleKeyEvent(keyId, currentState)
 					this.instance.log('info', `Key ${keyName} (${keyId}) state changed to ${currentState}`)
 				} else {
-					this.instance.log('debug', `No key config found for: ${keyName}. Available configs: ${JSON.stringify(this.instance.monitoredKeys.map(k => k.value))}`)
+					this.instance.log(
+						'debug',
+						`No key config found for: ${keyName}. Available configs: ${JSON.stringify(this.instance.monitoredKeys.map((k) => k.value))}`,
+					)
 				}
 			})
 
 			this.instance.log('info', 'Key listener started successfully')
-			
+
 			// List active monitored keys
-			const keyNames = this.instance.monitoredKeys.map(k => `${k.id}:${k.value}`).join(', ')
+			const keyNames = this.instance.monitoredKeys.map((k) => `${k.id}:${k.value}`).join(', ')
 			this.instance.log('info', `Monitoring keys: ${keyNames}`)
 		} catch (error) {
 			this.instance.log('error', `Failed to initialize key listener: ${error.message}`)
@@ -76,27 +79,24 @@ class KeyListener {
 
 	findKeyConfig(keyName) {
 		// Try case-insensitive match first
-		let result = this.instance.monitoredKeys.find(k => 
-			k.value.toLowerCase() === keyName.toLowerCase()
-		)
-		
+		let result = this.instance.monitoredKeys.find((k) => k.value.toLowerCase() === keyName.toLowerCase())
+
 		if (!result) {
 			// Try matching with additional checks for special cases
-			result = this.instance.monitoredKeys.find(k => {
+			result = this.instance.monitoredKeys.find((k) => {
 				// Try exact match
 				if (k.value === keyName) return true
-				
+
 				// Try with/without spaces for keys like PageUp vs Page Up
 				if (k.value.replace(/\s+/g, '') === keyName.replace(/\s+/g, '')) return true
-				
+
 				// Special case for modifier keys - preserve LEFT/RIGHT distinction
 				if (keyName.includes('LEFT ') || keyName.includes('RIGHT ')) {
 					if (k.value === keyName) return true
 				}
 
 				// Special cases for control keys
-				if ((keyName === 'Control' && k.value === 'CTRL') ||
-				    (keyName === 'CTRL' && k.value === 'Control')) {
+				if ((keyName === 'Control' && k.value === 'CTRL') || (keyName === 'CTRL' && k.value === 'Control')) {
 					return true
 				}
 
@@ -104,17 +104,19 @@ class KeyListener {
 				if (keyName.startsWith('NUMPAD ') && k.value === keyName.substring(7)) {
 					return true
 				}
-				
+
 				// Special case for CapsLock
-				if ((keyName === 'CAPS LOCK' && k.value === 'CapsLock') ||
-				    (keyName === 'CapsLock' && k.value === 'CAPS LOCK')) {
+				if (
+					(keyName === 'CAPS LOCK' && k.value === 'CapsLock') ||
+					(keyName === 'CapsLock' && k.value === 'CAPS LOCK')
+				) {
 					return true
 				}
-				
+
 				return false
 			})
 		}
-		
+
 		return result
 	}
 
@@ -126,10 +128,10 @@ class KeyListener {
 		if (keyName === 'RIGHT ARROW') return 'ArrowRight'
 		if (keyName === 'UP ARROW') return 'ArrowUp'
 		if (keyName === 'DOWN ARROW') return 'ArrowDown'
-		
+
 		// Special handling for caps lock
 		if (keyName === 'CAPS LOCK') return 'CapsLock'
-		
+
 		// Special handling for control keys with explicit LEFT/RIGHT prefix
 		if (keyName === 'LEFT CTRL') return 'LEFT Control'
 		if (keyName === 'RIGHT CTRL') return 'RIGHT Control'
@@ -137,16 +139,16 @@ class KeyListener {
 		if (keyName === 'RIGHT ALT') return 'RIGHT Alt'
 		if (keyName === 'LEFT SHIFT') return 'LEFT Shift'
 		if (keyName === 'RIGHT SHIFT') return 'RIGHT Shift'
-		
+
 		// Handle numpad keys
 		if (keyName.startsWith('NUMPAD ')) {
-			const numpadValue = keyName.substring(7);
+			const numpadValue = keyName.substring(7)
 			if (/^\d$/.test(numpadValue)) {
 				return `Numpad${numpadValue}`
 			}
 			return `Numpad${numpadValue}`
 		}
-			
+
 		// Handle keys with LEFT/RIGHT prefix for other keys
 		if (keyName.startsWith('LEFT ')) {
 			this.instance.log('debug', `Removing LEFT prefix from: ${keyName}`)
@@ -161,7 +163,7 @@ class KeyListener {
 		if (keyName.toLowerCase() === 'page down') return 'PageDown'
 		if (keyName.toLowerCase() === 'pageup') return 'PageUp'
 		if (keyName.toLowerCase() === 'pagedown') return 'PageDown'
-		
+
 		// Handle arrow keys with different formats
 		if (keyName.toLowerCase() === 'up arrow') return 'ArrowUp'
 		if (keyName.toLowerCase() === 'down arrow') return 'ArrowDown'
@@ -193,7 +195,7 @@ class KeyListener {
 			case 'alt':
 				return 'Alt'
 			case 'shift':
-				return 'Shift'  
+				return 'Shift'
 			case 'meta':
 				return 'Meta'
 			case 'win':

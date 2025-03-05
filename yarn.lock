@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@companion-module/base@^1.11.0":
+"@companion-module/base@^1.4.0":
   version "1.11.3"
   resolved "https://registry.yarnpkg.com/@companion-module/base/-/base-1.11.3.tgz#12e54056d1873c588d47869917fbbb850871651c"
   integrity sha512-6oVmvtLguDly+zcSN86D0Z++yI60oeH3X/gumJ1FdBkZjdozlKFAsSykIvYQ0QIs+SMFRh1C9M/F6egOVT/RMA==
@@ -977,6 +977,11 @@ prettier-linter-helpers@^1.0.0:
   integrity sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==
   dependencies:
     fast-diff "^1.1.2"
+
+prettier@^3.1.0:
+  version "3.5.3"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.5.3.tgz#4fc2ce0d657e7a02e602549f053b239cb7dfe1b5"
+  integrity sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw==
 
 randombytes@^2.1.0:
   version "2.1.0"
