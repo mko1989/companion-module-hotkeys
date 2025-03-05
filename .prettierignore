@@ -1,0 +1,13 @@
+node_modules
+dist
+build
+.idea
+.vscode
+*.zip
+VARIABLES.md
+README.md
+INSTALLATION.md
+todo-list.md
+project-memories.md
+package-lock.json
+yarn.lock

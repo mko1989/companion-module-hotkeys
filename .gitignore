@@ -1,0 +1,9 @@
+# Dependencies
+node_modules/
+yarn-error.log
+npm-debug.log
+
+
+project-memories.md
+project-roadmap.md
+todo-list.md
